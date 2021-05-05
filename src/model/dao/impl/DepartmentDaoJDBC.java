@@ -62,6 +62,27 @@ public class DepartmentDaoJDBC implements DepartmentDao{
 	@Override
 	public void update(Department obj) { //UPDATE A DEPARTMENT 
 		
+		PreparedStatement st = null; //SQL STATEMENT 
+		//TRY BLOCK
+		try {
+			st = conn.prepareStatement(
+					"UPDATE department "
+					+ "SET Name = ? "
+					+ "WHERE Id = ?");
+			
+			st.setString(1, obj.getName());
+			st.setInt(2, obj.getId());
+			
+			st.executeUpdate();
+		}
+		//CATCH BLOCK
+		catch(SQLException e) {
+			throw new DbException(e.getMessage()); //SQL EXCEPTION
+		}
+		//FINALLY BLOCK
+		finally {
+			DB.closeStatement(st); //CLOSE STATEMENT
+		}
 	}
 
 	@Override
@@ -72,8 +93,40 @@ public class DepartmentDaoJDBC implements DepartmentDao{
 
 	@Override
 	public Department findById(Integer id) {
-		// FIND DEPARTMENT BY ID
-		return null;
+		//FIND DEPARTMENT BY ID
+		PreparedStatement st = null; //SQL STATEMENT
+		ResultSet rs = null; //DISPLAY DATA
+		
+		try {
+			st = conn.prepareStatement(
+					"SELECT * FROM department "
+					+ "WHERE department.Id = ?");
+			
+			st.setInt(1, id);
+			rs = st.executeQuery(); 
+			
+			if (rs.next()) {
+				Department obj = instantiateDepartment(rs); //METHOD THAT INSTATIATE A DEPARTMENT IF THE ROW ISN´T NULL
+				return obj;
+			}
+			return null;
+		}
+		
+		catch(SQLException e) {
+			throw new DbException(e.getMessage()); //SQL EXCEPTION
+		}
+		
+		finally {
+			DB.closeStatement(st); //CLOSE STATEMENT
+			DB.closeResultSet(rs); //CLOSE RESULT SET
+		}
+	}
+
+	private Department instantiateDepartment(ResultSet rs) throws SQLException { //INSTATIATE A DEPARTMENT OF THE DB
+		Department obj = new Department(); //EMPTY CONSTRUCTOR
+		obj.setId(rs.getInt("Id"));        //SETS DEPARTMENT ID 
+		obj.setName(rs.getString("Name")); //SET DEPARTMENT NAME
+		return obj;
 	}
 
 	@Override
