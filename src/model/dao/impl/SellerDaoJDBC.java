@@ -1,6 +1,6 @@
 package model.dao.impl;
 
-import java.sql.Connection;
+import java.sql.Connection;  
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -17,15 +17,18 @@ import model.entities.Department;
 import model.entities.Seller;
 
 public class SellerDaoJDBC implements SellerDao {
+	//THIS CLASS IMPLEMENTS THE SELLER DAO INTERFACE
 	
-	private Connection conn;
+	private Connection conn; //CONECTS WITH THE DB
 	
 	public SellerDaoJDBC(Connection conn) { //DEPENDENCY
 		this.conn = conn;
 	}
-
+    
+	//METHODS
 	@Override
-	public void insert(Seller obj) {
+	public void insert(Seller obj) { //INSERT A SELLER INTO THE DB
+	
 		PreparedStatement st = null;
 		try {
 			st = conn.prepareStatement(
@@ -65,7 +68,7 @@ public class SellerDaoJDBC implements SellerDao {
 	}
 
 	@Override
-	public void update(Seller obj) {
+	public void update(Seller obj) { //UPDATE A SELLER ROW
 
 		PreparedStatement st = null;
 		try {
@@ -94,6 +97,7 @@ public class SellerDaoJDBC implements SellerDao {
 
 	@Override
 	public void deleteById(Integer id) {
+		//DELETE A SELLER BY ID
 		PreparedStatement st = null;
 		try {
 			st = conn.prepareStatement("DELETE FROM seller WHERE Id = ?");
@@ -112,6 +116,7 @@ public class SellerDaoJDBC implements SellerDao {
 
 	@Override
 	public Seller findById(Integer id) {
+		//FIND A SELLER BY ID
 		PreparedStatement st = null;
 		ResultSet rs = null;
 		try {
@@ -160,6 +165,7 @@ public class SellerDaoJDBC implements SellerDao {
 
 	@Override
 	public List<Seller> findAll() {
+		//FIND ALL SELLERS
 		PreparedStatement st = null;
 		ResultSet rs = null;
 		try {
@@ -199,6 +205,7 @@ public class SellerDaoJDBC implements SellerDao {
 
 	@Override
 	public List<Seller> findByDepartment(Department department) {
+		//FIND A SELLER BY DEPARTMENT
 		PreparedStatement st = null;
 		ResultSet rs = null;
 		try {

@@ -1,6 +1,6 @@
 package application;
 
-import java.util.Date;
+import java.util.Date; 
 import java.util.List;
 import java.util.Scanner;
 
@@ -9,9 +9,10 @@ import model.dao.SellerDao;
 import model.entities.Department;
 import model.entities.Seller;
 
-public class Program {
+public class ProgramA {
 
 	public static void main(String[] args) {
+		//TEST PROGRAM
 		Scanner sc = new Scanner(System.in);
 	
 		SellerDao sellerDao = DaoFactory.createSellerDao();
@@ -46,6 +47,12 @@ public class Program {
 		sellerDao.deleteById(id);
 		System.out.println("Deletion completed.");
 		
+		//PRÓXIMO
+		/*
+		IMPLEMENTAR A CLASSE "DepartmentDaoJDBC"
+		MEXER NA CLASSE "DaoFactory" PARA INCLUIR UM MÉTODO PARA INSTANCIAR A CLASSE "DepartmentDao"
+	    CRIE OUTRO PROGRAMA PRINCIPAL PARA TESTAR DE PREFERECIA.
+		*/
 		sc.close();
 	}
 }

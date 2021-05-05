@@ -6,6 +6,7 @@ import model.entities.Department;
 import model.entities.Seller;
 
 public interface SellerDao {
+	//CLASS ACCESS DATA OF THE SELLER ENTITIE
 	
 	void insert(Seller obj);
 	void update(Seller obj);
