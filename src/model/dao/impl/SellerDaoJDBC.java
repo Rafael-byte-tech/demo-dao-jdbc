@@ -165,7 +165,7 @@ public class SellerDaoJDBC implements SellerDao {
 
 	@Override
 	public List<Seller> findAll() {
-		//FIND ALL SELLERS
+		//DISPLAY ALL SELLERS
 		PreparedStatement st = null;
 		ResultSet rs = null;
 		try {

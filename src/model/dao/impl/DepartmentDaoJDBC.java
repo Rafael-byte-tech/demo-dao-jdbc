@@ -1,10 +1,11 @@
 package model.dao.impl;
 
-import java.sql.Connection; 
+import java.sql.Connection;  
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
 import db.DB;
@@ -15,7 +16,7 @@ import model.entities.Department;
 public class DepartmentDaoJDBC implements DepartmentDao{
 	//THIS CLASS IMPLEMENTS THE DEPARTMENT DAO INTERFACE
 	
-	private Connection conn;
+	private Connection conn; //CONNECT TO DB
 	
 	public DepartmentDaoJDBC(Connection conn) { //DEPENDENCY
 		this.conn = conn;
@@ -117,6 +118,7 @@ public class DepartmentDaoJDBC implements DepartmentDao{
 		PreparedStatement st = null; //SQL STATEMENT
 		ResultSet rs = null; //DISPLAY DATA
 		
+		//TRY BLOCK
 		try {
 			st = conn.prepareStatement(
 					"SELECT * FROM department "
@@ -132,10 +134,12 @@ public class DepartmentDaoJDBC implements DepartmentDao{
 			return null;
 		}
 		
+		//CATCH BLOCK
 		catch(SQLException e) {
 			throw new DbException(e.getMessage()); //SQL EXCEPTION
 		}
 		
+		//FINALLY BLOCK
 		finally {
 			DB.closeStatement(st); //CLOSE STATEMENT
 			DB.closeResultSet(rs); //CLOSE RESULT SET
@@ -152,7 +156,38 @@ public class DepartmentDaoJDBC implements DepartmentDao{
 	@Override
 	public List<Department> findAll() {
 		// DISPLAY ALL DEPARTMENTS
-		return null;
+		
+		PreparedStatement st = null; //SQLSTATEMENT
+		ResultSet rs = null; //DISPLAY DATA
+		
+		//TRY BLOCK
+		try {
+			st = conn.prepareStatement(
+					"SELECT * FROM department "
+					+ "ORDER BY Id");
+			
+			rs = st.executeQuery();
+			
+			List<Department> list = new ArrayList<Department>(); // DEPARTMENT LIST
+			
+			//WHILE BLOCK
+			while (rs.next()) {				
+				Department obj = instantiateDepartment(rs); //INSTANTIATE DEPARTMENT
+				list.add(obj); //ADD DEPARTMENT TO LIST
+			}
+			return list;
+		}
+	    
+		//CATCH BLOCK
+		catch (SQLException e) {
+			throw new DbException(e.getMessage());
+		}
+		
+		//FINALLY BLOCK
+		finally {
+			DB.closeStatement(st); //CLOSE STATEMENT
+			DB.closeResultSet(rs); //CLOSE RESULT SET
+		}
 	}
 
 }

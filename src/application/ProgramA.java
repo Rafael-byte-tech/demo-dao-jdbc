@@ -1,6 +1,6 @@
 package application;
 
-import java.util.Date; 
+import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
@@ -14,15 +14,20 @@ public class ProgramA {
 	public static void main(String[] args) {
 		//TEST PROGRAM
 		Scanner sc = new Scanner(System.in);
+		Integer id;
 	
-		SellerDao sellerDao = DaoFactory.createSellerDao();
+		SellerDao sellerDao = DaoFactory.createSellerDao(); //DATA ACCESS OBJECT
 		
 		System.out.println("===== TEST 1: seller find by id =====");
-		Seller seller = sellerDao.findById(3);
+		System.out.print("Enter Id for test: ");
+		id = sc.nextInt();
+		Seller seller = sellerDao.findById(id);
 		System.out.println(seller);
 		
 		System.out.println("===== TEST 2: seller find by department =====");
-		Department department = new Department(2, null);
+		System.out.print("Enter department Id for test: ");
+		id = sc.nextInt();
+		Department department = new Department(id, null);
 		List<Seller> list = sellerDao.findByDepartment(department);
 		list.forEach(System.out::println);
 		
@@ -43,16 +48,10 @@ public class ProgramA {
 
 		System.out.println("===== TEST 6: seller deletion =====");
 		System.out.println("Enter id for delete test: ");
-		Integer id = sc.nextInt();
+		id = sc.nextInt();
 		sellerDao.deleteById(id);
 		System.out.println("Deletion completed.");
-		
-		//PRÓXIMO
-		/*
-		IMPLEMENTAR A CLASSE "DepartmentDaoJDBC"
-		MEXER NA CLASSE "DaoFactory" PARA INCLUIR UM MÉTODO PARA INSTANCIAR A CLASSE "DepartmentDao"
-	    CRIE OUTRO PROGRAMA PRINCIPAL PARA TESTAR DE PREFERECIA.
-		*/
+	
 		sc.close();
 	}
 }
